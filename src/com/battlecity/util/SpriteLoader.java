@@ -15,8 +15,10 @@ public class SpriteLoader {
 	private static BufferedImage brick, brickRight, brickBottom, brickLeft, brickTop, miniBrick, miniBrickRight, miniBrickBottom, miniBrickLeft, miniBrickTop;
 	private static BufferedImage steel, steelRight, steelBottom, steelLeft, steelTop, miniSteel;
 	private static BufferedImage ice, miniIce;
-	private static BufferedImage water, waterSec, miniWater, miniWaterSec;
 	private static BufferedImage bush, miniBush;
+	private static BufferedImage steelWall, miniSteelWall;
+	private static BufferedImage eagleAlive, eagleDead;
+	private static BufferedImage water, waterSec, miniWater, miniWaterSec;	
 	// TODO: There will be more sprite
 	
 	
@@ -31,38 +33,47 @@ public class SpriteLoader {
 			loadTanks();
 			loadBricks();
 			loadSteels();
+			loadIces();
+			loadBushes();
+			loadSteelWalls();
+			loadEagles();
+			loadWaters();
 		} catch (Exception e) {
-			System.err.println("Tanks can not be loaded\n" + e.getMessage());
+			System.err.println("Image can not be loaded\n" + e.getMessage());
 		}
 	}
 	
 	private static void loadTanks() {
-		yellowTanks = new BufferedImage[8][8];
-		for (int i = 0; i < 8; ++i) {
-			for (int j = 0; j < 8; ++j) {
-				yellowTanks[i][j] = crop(j * 16, i * 16, 16, 16);
+		try {
+			yellowTanks = new BufferedImage[8][8];
+			for (int i = 0; i < 8; ++i) {
+				for (int j = 0; j < 8; ++j) {
+					yellowTanks[i][j] = crop(j * 16, i * 16, 16, 16);
+				}
 			}
-		}
-		
-		grayTanks = new BufferedImage[8][8];
-		for (int i = 0; i < 8; ++i) {
-		    for (int j = 0; j < 8; ++j) {
-		        grayTanks[i][j] = crop((j + 8) * 16, i * 16, 16, 16);
-		    }
-		}
-
-		greenTanks = new BufferedImage[8][8];
-		for (int i = 0; i < 8; ++i) {
-		    for (int j = 0; j < 8; ++j) {
-		        greenTanks[i][j] = crop(j * 16, (i + 8) * 16, 16, 16);
-		    }
-		}
-
-		pinkTanks = new BufferedImage[8][8];
-		for (int i = 0; i < 8; ++i) {
-		    for (int j = 0; j < 8; ++j) {
-		        pinkTanks[i][j] = crop((j + 8) * 16, (i + 8) * 16, 16, 16);
-		    }
+			
+			grayTanks = new BufferedImage[8][8];
+			for (int i = 0; i < 8; ++i) {
+			    for (int j = 0; j < 8; ++j) {
+			        grayTanks[i][j] = crop((j + 8) * 16, i * 16, 16, 16);
+			    }
+			}
+	
+			greenTanks = new BufferedImage[8][8];
+			for (int i = 0; i < 8; ++i) {
+			    for (int j = 0; j < 8; ++j) {
+			        greenTanks[i][j] = crop(j * 16, (i + 8) * 16, 16, 16);
+			    }
+			}
+	
+			pinkTanks = new BufferedImage[8][8];
+			for (int i = 0; i < 8; ++i) {
+			    for (int j = 0; j < 8; ++j) {
+			        pinkTanks[i][j] = crop((j + 8) * 16, (i + 8) * 16, 16, 16);
+			    }
+			}
+		} catch (Exception e) {
+			System.err.println("Tanks can not be loaded\n" + e.getMessage());
 		}
 	}
 	
@@ -79,7 +90,7 @@ public class SpriteLoader {
 			miniBrickLeft = crop(280, 64, 8, 8);
 			miniBrickTop = crop(288, 64, 8, 8);
 		} catch (Exception e) {
-			System.err.println("Tanks can not be bricks\n" + e.getMessage());
+			System.err.println("Bricks can not be loaded\n" + e.getMessage());
 		}
 	}
 	
@@ -92,7 +103,54 @@ public class SpriteLoader {
 			steelTop = crop(320, 16, 16, 16);
 			miniSteel = crop(256, 72, 8, 8);
 		} catch (Exception e) {
-			System.err.println("Tanks can not be steels\n" + e.getMessage());
+			System.err.println("Steels can not be loaded\n" + e.getMessage());
+		}
+	}
+	
+	private static void loadIces() {
+		try {
+			ice = crop(256, 32, 16, 16);
+			miniIce = crop(256, 80, 8, 8);
+		} catch (Exception e) {
+			System.err.println("Ices can not be loaded\n" + e.getMessage());
+		}
+	}
+	
+	private static void loadBushes() {
+		try {
+			bush = crop(272, 32, 16, 16);
+			miniBush = crop(264, 72, 8, 8);
+		} catch (Exception e) {
+			System.err.println("Bushes can not be loaded\n" + e.getMessage());
+		}
+	}
+	
+	private static void loadSteelWalls() {
+		try {
+			steelWall = crop(288, 32, 16, 16);
+			miniSteelWall = crop(272, 72, 8, 8);
+		} catch (Exception e) {
+			System.err.println("Steel Walls can not be loaded\n" + e.getMessage());
+		}
+	}
+	
+	private static void loadEagles() {
+		try {
+			eagleAlive = crop(304, 32, 16, 16);
+			eagleDead = crop(320, 32, 16, 16);
+		} catch (Exception e) {
+			System.err.println("Eagles can not be loaded\n" + e.getMessage());
+		}
+	}
+	
+	private static void loadWaters() {
+		try {
+			water = crop(256, 48, 16, 16);
+			waterSec = crop(272, 48, 16, 16);
+			miniWater = crop(264, 80, 8, 8);
+			miniWaterSec = crop(272, 80, 8, 8);
+		} catch (Exception e) {
+			System.err.println("Waters can not be loaded\n" + e.getMessage());
 		}
 	}
 	
@@ -100,6 +158,7 @@ public class SpriteLoader {
 	// TODO: Don't sure about the getter method for sprite
 	//public static BufferedImage getSprite() { return sprite; }
 	
+	// Setters and Getters
 	public static BufferedImage[][] getYellowTanks() { return yellowTanks; }
 	public static BufferedImage[][] getGrayTanks() { return grayTanks; }
 	public static BufferedImage[][] getGreenTanks() { return greenTanks; }
@@ -126,14 +185,19 @@ public class SpriteLoader {
 	public static BufferedImage getIce() { return ice; }
 	public static BufferedImage getMiniIce() { return miniIce; }
 	
+	public static BufferedImage getBush() { return bush; }
+	public static BufferedImage getMiniBush() { return miniBush; }
+	
+	public static BufferedImage getSteelWall() { return steelWall; }
+	public static BufferedImage getMiniSteelWall() { return miniSteelWall; }
+	
+	public static BufferedImage getEagleAlive() { return eagleAlive; }
+	public static BufferedImage getEagleDead() { return eagleDead; }
+
 	public static BufferedImage getWater() { return water; }
 	public static BufferedImage getWaterSec() { return waterSec; }
 	public static BufferedImage getMiniWater() { return miniWater; }
 	public static BufferedImage getMiniWaterSec() { return miniWaterSec; }
-	
-	public static BufferedImage getBush() { return bush; }
-	public static BufferedImage getMiniBush() { return miniBush; }
-
 	
 	public static BufferedImage crop(int x, int y, int width, int height) {
 		return sprite.getSubimage(x, y, width, height);
