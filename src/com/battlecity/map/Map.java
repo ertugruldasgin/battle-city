@@ -1,12 +1,11 @@
 package com.battlecity.map;
 
-public class Map {
-	public static final int EDGE_LENGTH = 13;
-	public static final int BOARD_WIDTH = 16 * EDGE_LENGTH;
+import com.battlecity.util.Constants;
 
+public class Map {
 	private CellType[][] stage;
 
-	public Map() { stage = new CellType[EDGE_LENGTH][EDGE_LENGTH]; }
+	public Map() { stage = new CellType[Constants.EDGE_LENGTH][Constants.EDGE_LENGTH]; }
 
 	public CellType[][] getMap() { return stage; }
 
@@ -15,8 +14,8 @@ public class Map {
 	public void setCell(int row, int col, CellType val) { stage[row][col] = val; }
 
 	public void loadStage1() {
-		for (int r = 0; r < EDGE_LENGTH; r++) {
-			for (int c = 0; c < EDGE_LENGTH; c++) { stage[r][c] = CellType.EMPTY; }
+		for (int r = 0; r < Constants.EDGE_LENGTH; r++) {
+			for (int c = 0; c < Constants.EDGE_LENGTH; c++) { stage[r][c] = CellType.EMPTY; }
 		}
 
 		stage[12][6] = CellType.EAGLE;
