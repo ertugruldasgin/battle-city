@@ -1,6 +1,7 @@
 package com.battlecity.entity;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
 import com.battlecity.map.Map;
 import com.battlecity.util.Collision;
@@ -10,13 +11,46 @@ import com.battlecity.util.SpriteLoader;
 public class Tank extends Entity {
 	private int dir;
 	private int frame;
-
-	public boolean upPressed, downPressed, leftPressed, rightPressed;
+	private boolean upPressed, downPressed, leftPressed, rightPressed;
 
 	public Tank(int x, int y) {
 		super(x, y, 64, 64, 2, SpriteLoader.getYellowTanks()[0][0]);
 		this.dir = 0;
 		this.frame = 0;
+	}
+
+	public void keyPressed(int keyCode) {
+		switch (keyCode) {
+		case KeyEvent.VK_W:
+			upPressed = true;
+			break;
+		case KeyEvent.VK_A:
+			leftPressed = true;
+			break;
+		case KeyEvent.VK_S:
+			downPressed = true;
+			break;
+		case KeyEvent.VK_D:
+			rightPressed = true;
+			break;
+		}
+	}
+
+	public void keyReleased(int keyCode) {
+		switch (keyCode) {
+		case KeyEvent.VK_W:
+			upPressed = false;
+			break;
+		case KeyEvent.VK_A:
+			leftPressed = false;
+			break;
+		case KeyEvent.VK_S:
+			downPressed = false;
+			break;
+		case KeyEvent.VK_D:
+			rightPressed = false;
+			break;
+		}
 	}
 
 	public void move(int dir, Map map) {
@@ -58,6 +92,28 @@ public class Tank extends Entity {
 		}
 
 		img = SpriteLoader.getYellowTanks()[0][frame + dir * 2];
+	}
+
+	public Bullet shoot() {
+		int bulletX = x + width / 2 - 4;
+		int bulletY = y + height / 2 - 4;
+
+		switch (dir) {
+		case 0:
+			bulletY = y - 8;
+			break;
+		case 1:
+			bulletX = x - 8;
+			break;
+		case 2:
+			bulletY = y + height;
+			break;
+		case 3:
+			bulletX = x + width;
+			break;
+		}
+
+		return new Bullet(bulletX, bulletY, dir);
 	}
 
 	@Override

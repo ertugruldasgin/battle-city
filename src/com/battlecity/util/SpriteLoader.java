@@ -182,8 +182,8 @@ public class SpriteLoader {
 		try {
 			bullet = new BufferedImage[4];
 			bullet[0] = crop(323, 102, 3, 4);
-			bullet[1] = crop(346, 102, 4, 3);
-			bullet[3] = crop(330, 102, 4, 3);
+			bullet[3] = crop(346, 102, 4, 3);
+			bullet[1] = crop(330, 102, 4, 3);
 			bullet[2] = crop(339, 102, 3, 4);
 		} catch (Exception e) {
 			System.err.println("Bullets sprite can not be loaded\n" + e.getMessage());

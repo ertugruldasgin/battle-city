@@ -6,9 +6,11 @@ import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import com.battlecity.entity.Bullet;
 import com.battlecity.entity.Tank;
 import com.battlecity.map.CellType;
 import com.battlecity.map.Map;
@@ -22,6 +24,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 	private Map map;
 	private Tank player;
+	private ArrayList<Bullet> bullets = new ArrayList<>();
 
 	public GamePanel() {
 		int windowSize = Constants.EDGE_LENGTH * 64;
@@ -36,39 +39,12 @@ public class GamePanel extends JPanel implements Runnable {
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				switch (e.getKeyCode()) {
-				case KeyEvent.VK_W:
-					player.upPressed = true;
-					break;
-				case KeyEvent.VK_A:
-					player.leftPressed = true;
-					break;
-				case KeyEvent.VK_S:
-					player.downPressed = true;
-					break;
-				case KeyEvent.VK_D:
-					player.rightPressed = true;
-					break;
-				}
+				player.keyPressed(e.getKeyCode());
+				if (e.getKeyCode() == KeyEvent.VK_SPACE) { if (bullets.isEmpty()) { bullets.add(player.shoot()); } }
 			}
 
 			@Override
-			public void keyReleased(KeyEvent e) {
-				switch (e.getKeyCode()) {
-				case KeyEvent.VK_W:
-					player.upPressed = false;
-					break;
-				case KeyEvent.VK_A:
-					player.leftPressed = false;
-					break;
-				case KeyEvent.VK_S:
-					player.downPressed = false;
-					break;
-				case KeyEvent.VK_D:
-					player.rightPressed = false;
-					break;
-				}
-			}
+			public void keyReleased(KeyEvent e) { player.keyReleased(e.getKeyCode()); }
 		});
 	}
 
@@ -98,7 +74,15 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 
-	private void update() { player.update(map); }
+	private void update() {
+		player.update(map);
+
+		for (int i = bullets.size() - 1; i >= 0; i--) {
+			Bullet b = bullets.get(i);
+			b.update(map);
+			if (!b.isActive()) { bullets.remove(i); }
+		}
+	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -143,5 +127,7 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 
 		player.draw(g);
+
+		for (Bullet b : bullets) { b.draw(g); }
 	}
 }
